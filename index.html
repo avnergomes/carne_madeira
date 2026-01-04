@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carne e Madeira PR - Análise Territorial ILPF</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🌲🥩 Análise Territorial - Carne e Madeira no Paraná</h1>
+            <p class="subtitle">Sobreposição de Produções para Sistemas Integrados (ILPF)</p>
+        </div>
+    </header>
+
+    <!-- Controls -->
+    <div class="controls-section">
+        <div class="container">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="yearSlider">📅 Ano: <span id="yearValue">2013</span></label>
+                    <input type="range" id="yearSlider" min="2013" max="2022" value="2013" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label for="mapType">🗺️ Tipo de Visualização:</label>
+                    <select id="mapType">
+                        <option value="ilpf">Sobreposição ILPF</option>
+                        <option value="madeira">Produção de Madeira</option>
+                        <option value="carne">Produção de Carne</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="metrics-section">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">🌲</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Produção de Madeira</div>
+                        <div class="metric-value" id="metricMadeira">-</div>
+                        <div class="metric-unit">R$ milhões</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">🥩</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Produção Pecuária</div>
+                        <div class="metric-value" id="metricCarne">-</div>
+                        <div class="metric-unit">R$ milhões</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">🔗</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Municípios com Ambos</div>
+                        <div class="metric-value" id="metricMunicipios">-</div>
+                        <div class="metric-unit">de 399 municípios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="mapa">🗺️ Mapa</button>
+                <button class="tab-button" data-tab="series">📈 Séries Temporais</button>
+                <button class="tab-button" data-tab="ranking">🏆 Ranking</button>
+            </div>
+
+            <!-- Tab Content: Mapa -->
+            <div class="tab-content active" id="tab-mapa">
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div class="map-legend" id="mapLegend"></div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Séries Temporais -->
+            <div class="tab-content" id="tab-series">
+                <div class="chart-container">
+                    <h3>Valor da Produção (2013-2022)</h3>
+                    <canvas id="chartComparacao"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Municípios com Ambas Produções</h3>
+                    <canvas id="chartAmbos"></canvas>
+                </div>
+            </div>
+
+            <!-- Tab Content: Ranking -->
+            <div class="tab-content" id="tab-ranking">
+                <div class="ranking-grid">
+                    <div class="ranking-section">
+                        <h3>🏆 Top 10 - Ranking Combinado (ILPF)</h3>
+                        <div class="ranking-list" id="rankingCombinado"></div>
+                    </div>
+
+                    <div class="ranking-section">
+                        <h3>🌲 Top 10 - Produção de Madeira</h3>
+                        <div class="ranking-list" id="rankingMadeira"></div>
+                    </div>
+
+                    <div class="ranking-section">
+                        <h3>🥩 Top 10 - Produção Pecuária</h3>
+                        <div class="ranking-list" id="rankingCarne"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <strong>Fonte:</strong> IBGE - SIDRA<br>
+                    <strong>Madeira:</strong> Tabela 291 (Silvicultura) | Período: 2013-2022 | Métrica: Valor da Produção (R$ mil)<br>
+                    <strong>Carne:</strong> Tabela 74 (Produção Animal) | Período: 2013-2022 | Métrica: Valor da Produção (R$ mil)<br>
+                    <strong>Período coincidente:</strong> 2013-2022 (10 anos completos) | <strong>Métrica comum:</strong> Valor econômico em R$ mil
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <!-- Main Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
