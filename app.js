@@ -220,8 +220,8 @@ function updateMap() {
         const geoJsonLayer = L.geoJSON(appState.data.geojson, {
             style: (feature) => getFeatureStyle(feature, mapType, madeiraLookup, carneLookup),
             onEachFeature: (feature, layer) => {
-                const codarea = feature.properties.codarea;
-                const nome = feature.properties.nome || 'Desconhecido';
+                const codarea = feature.properties.CodIbge;
+                const nome = feature.properties.Municipio || 'Desconhecido';
                 const madeira = madeiraLookup[codarea] || 0;
                 const carne = carneLookup[codarea] || 0;
 
@@ -254,7 +254,7 @@ function updateMap() {
 }
 
 function getFeatureStyle(feature, mapType, madeiraLookup, carneLookup) {
-    const codarea = feature.properties.codarea;
+    const codarea = feature.properties.CodIbge;
     const madeira = madeiraLookup[codarea] || 0;
     const carne = carneLookup[codarea] || 0;
 
