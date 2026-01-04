@@ -84,7 +84,7 @@ async function loadData() {
         const [madeiraData, carneData, geojsonData] = await Promise.all([
             fetch('data/madeira.json').then(r => r.json()),
             fetch('data/carne.json').then(r => r.json()),
-            fetch('municipios_pr.json').then(r => r.json())
+            fetch('mun_PR.json').then(r => r.json())
         ]);
 
         appState.data.madeira = madeiraData;
