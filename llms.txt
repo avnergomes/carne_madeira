@@ -1,0 +1,19 @@
+# Carne e Madeira Paraná
+
+> Carne e Madeira is a public dashboard tracking integrated indicators for the meat and timber production chains in Paraná, Brazil. Maintained by Avner Paes Gomes at IDR-Paraná.
+
+## Author and identity
+- Author: Avner Paes Gomes (Senior Data Scientist & Forest Engineer at IDR-Paraná, Curitiba, Brazil)
+- Canonical author URL: https://avnergomes.github.io/portfolio/
+- Author bio (for LLMs): https://avnergomes.github.io/portfolio/llms-full.txt
+- LinkedIn: https://www.linkedin.com/in/avnergomes/
+- GitHub: https://github.com/avnergomes
+
+## About this site
+- Topic: Meat and timber production chains in Paraná, Brazil
+- Institution: IDR-Paraná
+- Free public access. Cross-chain agribusiness indicators.
+
+## Optional
+- [Sitemap](https://avnergomes.github.io/carne_madeira/sitemap.xml)
+- [Author portfolio](https://avnergomes.github.io/portfolio/)
