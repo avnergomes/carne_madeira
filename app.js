@@ -158,11 +158,32 @@ function initializeMap() {
 
         console.log('Mapa criado, adicionando tiles...');
 
-        // Add base layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap © CARTO',
-            maxZoom: 19
-        }).addTo(appState.map);
+        // Add base layers (Esri + OSM, sem API key)
+        const baseLayers = {
+            'Esri Claro': L.layerGroup([
+              L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Esri, HERE, Garmin, © OpenStreetMap contributors',
+                maxZoom: 19,
+                maxNativeZoom: 16
+              }),
+              L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 19,
+                maxNativeZoom: 16
+              })
+            ]),
+            'OSM Padrão': L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> colaboradores',
+                maxZoom: 19
+            }),
+            'Esri Satélite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+                maxZoom: 19,
+                maxNativeZoom: 18
+            })
+        };
+
+        baseLayers['Esri Claro'].addTo(appState.map);
+        L.control.layers(baseLayers, {}, { collapsed: true }).addTo(appState.map);
 
         console.log('Mapa inicializado com sucesso!');
     } catch (error) {
